@@ -7,6 +7,9 @@ export default function Contact() {
     subject: '',
     message: ''
   })
+  const [loading, setLoading] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -14,13 +17,41 @@ export default function Contact() {
       ...prev,
       [name]: value
     }))
+    setErrorMessage('')
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Form submitted:', formData)
-    setFormData({ name: '', email: '', subject: '', message: '' })
-    alert('Grazie per il tuo messaggio! Ti contatteremo presto.')
+    setLoading(true)
+    setErrorMessage('')
+    setSuccessMessage('')
+
+    try {
+      const response = await fetch('http://localhost:3001/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Errore nell\'invio del messaggio')
+      }
+
+      setSuccessMessage('✅ Messaggio inviato con successo! Ti contatteremo presto.')
+      setFormData({ name: '', email: '', subject: '', message: '' })
+      
+      // Nascondi il messaggio di successo dopo 5 secondi
+      setTimeout(() => setSuccessMessage(''), 5000)
+    } catch (error) {
+      console.error('Errore:', error)
+      setErrorMessage(`❌ ${error.message}. Assicurati che il server sia in esecuzione (npm run server)`)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -38,7 +69,7 @@ export default function Contact() {
           </div>
           <div className="info-item">
             <h3>📧 Email</h3>
-            <p><a href="mailto:info@chillart.com">info@chillart.com</a></p>
+            <p><a href="mailto:grafichenelchill@gmail.com">grafichenelchill@gmail.com</a></p>
           </div>
           <div className="info-item">
             <h3>📞 Telefono</h3>
@@ -53,6 +84,9 @@ export default function Contact() {
         <form className="contact-form" onSubmit={handleSubmit}>
           <h2>Inviaci un messaggio</h2>
           
+          {successMessage && <div className="success-message">{successMessage}</div>}
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+          
           <div className="form-group">
             <label htmlFor="name">Nome</label>
             <input
@@ -62,6 +96,7 @@ export default function Contact() {
               value={formData.name}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </div>
 
@@ -74,6 +109,7 @@ export default function Contact() {
               value={formData.email}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </div>
 
@@ -86,6 +122,7 @@ export default function Contact() {
               value={formData.subject}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </div>
 
@@ -98,10 +135,13 @@ export default function Contact() {
               onChange={handleChange}
               rows="5"
               required
+              disabled={loading}
             ></textarea>
           </div>
 
-          <button type="submit" className="submit-btn">Invia Messaggio</button>
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? 'Invio in corso...' : 'Invia Messaggio'}
+          </button>
         </form>
       </section>
     </main>
