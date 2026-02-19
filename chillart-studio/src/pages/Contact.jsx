@@ -1,149 +1,53 @@
-import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { Mail, MapPin, Phone } from 'lucide-react'
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  })
-  const [loading, setLoading] = useState(false)
-  const [successMessage, setSuccessMessage] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-    setErrorMessage('')
+  const container = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.1 } }
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setErrorMessage('')
-    setSuccessMessage('')
-
-    try {
-      const response = await fetch('http://localhost:3001/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Errore nell\'invio del messaggio')
-      }
-
-      setSuccessMessage('✅ Messaggio inviato con successo! Ti contatteremo presto.')
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      
-      // Nascondi il messaggio di successo dopo 5 secondi
-      setTimeout(() => setSuccessMessage(''), 5000)
-    } catch (error) {
-      console.error('Errore:', error)
-      setErrorMessage(`❌ ${error.message}. Assicurati che il server sia in esecuzione (npm run server)`)
-    } finally {
-      setLoading(false)
-    }
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    show: { y: 0, opacity: 1 }
   }
 
   return (
-    <main className="page-contact">
-      <section className="hero">
-        <h1>Contattaci</h1>
-        <p>Siamo pronti ad ascoltare la tua idea</p>
-      </section>
+    <main className="bg-background min-h-screen text-primary pt-32 px-6 pb-20 flex flex-col items-center">
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="max-w-4xl w-full text-center"
+      >
+        <motion.section variants={item} className="mb-20">
+          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6">Contact Us</h1>
+          <p className="text-xl text-secondary">Come visit us or get in touch.</p>
+        </motion.section>
 
-      <section className="contact-content">
-        <div className="contact-info">
-          <div className="info-item">
-            <h3>📍 Indirizzo</h3>
-            <p>Via Esempio 123, 00100<br />Roma, Italia</p>
-          </div>
-          <div className="info-item">
-            <h3>📧 Email</h3>
-            <p><a href="mailto:grafichenelchill@gmail.com">grafichenelchill@gmail.com</a></p>
-          </div>
-          <div className="info-item">
-            <h3>📞 Telefono</h3>
-            <p><a href="tel:+39061234567">+39 06 1234567</a></p>
-          </div>
-          <div className="info-item">
-            <h3>🕐 Orari</h3>
-            <p>Lun - Ven: 09:00 - 18:00<br />Sab - Dom: Chiuso</p>
-          </div>
-        </div>
-
-        <form className="contact-form" onSubmit={handleSubmit}>
-          <h2>Inviaci un messaggio</h2>
-          
-          {successMessage && <div className="success-message">{successMessage}</div>}
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
-          
-          <div className="form-group">
-            <label htmlFor="name">Nome</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              disabled={loading}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              disabled={loading}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="subject">Oggetto</label>
-            <input
-              type="text"
-              id="subject"
-              name="subject"
-              value={formData.subject}
-              onChange={handleChange}
-              required
-              disabled={loading}
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="message">Messaggio</label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              rows="5"
-              required
-              disabled={loading}
-            ></textarea>
-          </div>
-
-          <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? 'Invio in corso...' : 'Invia Messaggio'}
-          </button>
-        </form>
-      </section>
+        <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center bg-zinc-900/50 p-12 rounded-2xl border border-zinc-800">
+          {[
+            { icon: MapPin, title: "Address", content: "Via Esempio 123, 00100 Roma, Italia" },
+            { icon: Mail, title: "Email", content: "grafichenelchill@gmail.com", link: "mailto:grafichenelchill@gmail.com" },
+            { icon: Phone, title: "Phone", content: "+39 06 1234567", link: "tel:+39061234567" },
+            { icon: 'clock', title: "Hours", content: "Mon - Fri: 09:00 - 18:00" }
+          ].map((info, i) => (
+            <div key={i} className="flex flex-col items-center gap-4">
+              <div className="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center text-accent text-2xl mb-2 border border-zinc-800">
+                {typeof info.icon === 'string' ? <span>🕒</span> : <info.icon className="w-8 h-8" />}
+              </div>
+              <div>
+                <h3 className="font-bold text-white text-xl mb-2">{info.title}</h3>
+                {info.link ? (
+                  <a href={info.link} className="text-secondary hover:text-accent transition-colors text-lg">{info.content}</a>
+                ) : (
+                  <p className="text-secondary text-lg">{info.content}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </motion.div>
     </main>
   )
 }
