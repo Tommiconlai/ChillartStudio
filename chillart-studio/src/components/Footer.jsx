@@ -1,8 +1,19 @@
 import { Link } from 'react-router-dom'
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { SITE } from '../config/siteConfig'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const { t } = useTranslation()
+
+  const navItems = [
+    { key: 'home', label: t('nav.home'), path: '/' },
+    { key: 'services', label: t('nav.services'), path: '/services' },
+    { key: 'portfolio', label: t('nav.portfolio'), path: '/portfolio' },
+    { key: 'about', label: t('nav.about'), path: '/about' },
+    { key: 'contact', label: t('nav.contact'), path: '/contact' },
+  ]
 
   return (
     <footer className="bg-zinc-950 text-secondary border-t border-zinc-900 pt-20 pb-10">
@@ -14,21 +25,21 @@ export default function Footer() {
               CHILLART<span className="text-accent">.</span>
             </h3>
             <p className="text-sm leading-relaxed">
-              We are a digital agency focused on creating meaningful experiences that connect brands with their audience.
+              {t('footer.tagline')}
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <h4 className="text-white font-bold mb-6">Navigation</h4>
+            <h4 className="text-white font-bold mb-6">{t('footer.navigation')}</h4>
             <ul className="space-y-4">
-              {['Home', 'Services', 'Portfolio', 'About', 'Contact'].map((item) => (
-                <li key={item}>
+              {navItems.map((item) => (
+                <li key={item.key}>
                   <Link
-                    to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                    to={item.path}
                     className="hover:text-accent transition-colors"
                   >
-                    {item}
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -37,26 +48,26 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-white font-bold mb-6">Contact</h4>
+            <h4 className="text-white font-bold mb-6">{t('footer.contact')}</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-accent shrink-0" />
-                <a href="mailto:info@chillart.com" className="hover:text-white transition-colors">info@chillart.com</a>
+                <a href={`mailto:${SITE.email}`} className="hover:text-white transition-colors">{SITE.email}</a>
               </li>
               <li className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-accent shrink-0" />
-                <a href="tel:+39061234567" className="hover:text-white transition-colors">+39 06 1234567</a>
+                <a href={`tel:${SITE.phone}`} className="hover:text-white transition-colors">{SITE.phone}</a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-accent shrink-0" />
-                <span>Via Esempio 123, Roma</span>
+                <span>{SITE.city}</span>
               </li>
             </ul>
           </div>
 
           {/* Socials */}
           <div>
-            <h4 className="text-white font-bold mb-6">Follow Us</h4>
+            <h4 className="text-white font-bold mb-6">{t('footer.followUs')}</h4>
             <div className="flex gap-4">
               {[Facebook, Instagram, Linkedin].map((Icon, i) => (
                 <a
@@ -72,7 +83,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-zinc-900 pt-8 text-center text-sm text-zinc-600">
-          <p>&copy; {currentYear} Chillart Studio. All rights reserved.</p>
+          <p>&copy; {currentYear} Chillart Studio. {t('footer.rights')}</p>
         </div>
       </div>
     </footer>

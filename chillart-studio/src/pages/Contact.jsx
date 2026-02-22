@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion'
-import { Mail, MapPin, Phone } from 'lucide-react'
+import { Mail, MapPin, Phone, Clock } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { SITE } from '../config/siteConfig'
 
 export default function Contact() {
+  const { t } = useTranslation()
+
   const container = {
     hidden: { opacity: 0 },
     show: { opacity: 1, transition: { staggerChildren: 0.1 } }
@@ -12,6 +16,13 @@ export default function Contact() {
     show: { y: 0, opacity: 1 }
   }
 
+  const contactItems = [
+    { icon: MapPin, title: t('contact.address'), content: SITE.city },
+    { icon: Mail, title: t('contact.email'), content: SITE.email, link: `mailto:${SITE.email}` },
+    { icon: Phone, title: t('contact.phone'), content: SITE.phone, link: `tel:${SITE.phone}` },
+    { icon: Clock, title: t('contact.hours'), content: t('contact.hoursValue') },
+  ]
+
   return (
     <main className="bg-background min-h-screen text-primary pt-32 px-6 pb-20 flex flex-col items-center">
       <motion.div
@@ -21,20 +32,15 @@ export default function Contact() {
         className="max-w-4xl w-full text-center"
       >
         <motion.section variants={item} className="mb-20">
-          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6">Contact Us</h1>
-          <p className="text-xl text-secondary">Come visit us or get in touch.</p>
+          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6">{t('contact.pageTitle')}</h1>
+          <p className="text-xl text-secondary">{t('contact.pageSubtitle')}</p>
         </motion.section>
 
-        <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center bg-zinc-900/50 p-12 rounded-2xl border border-zinc-800">
-          {[
-            { icon: MapPin, title: "Address", content: "Via Esempio 123, 00100 Roma, Italia" },
-            { icon: Mail, title: "Email", content: "grafichenelchill@gmail.com", link: "mailto:grafichenelchill@gmail.com" },
-            { icon: Phone, title: "Phone", content: "+39 06 1234567", link: "tel:+39061234567" },
-            { icon: 'clock', title: "Hours", content: "Mon - Fri: 09:00 - 18:00" }
-          ].map((info, i) => (
+        <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center bg-zinc-900/50 p-12 rounded-2xl border border-zinc-800">
+          {contactItems.map((info, i) => (
             <div key={i} className="flex flex-col items-center gap-4">
               <div className="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center text-accent text-2xl mb-2 border border-zinc-800">
-                {typeof info.icon === 'string' ? <span>🕒</span> : <info.icon className="w-8 h-8" />}
+                <info.icon className="w-8 h-8" />
               </div>
               <div>
                 <h3 className="font-bold text-white text-xl mb-2">{info.title}</h3>
