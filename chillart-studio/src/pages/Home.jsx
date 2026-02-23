@@ -2,9 +2,33 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, Globe, Palette, Wand2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { useRef, useState, useEffect, useCallback } from 'react'
+
 
 export default function Home() {
   const { t } = useTranslation()
+
+  // Blob position (opposite to mouse, within hero section)
+  const heroRef = useRef(null)
+  const [blobPos, setBlobPos] = useState({ x: 60, y: 42.85 }) // percentages
+
+  const handleMouseMove = useCallback((e) => {
+    if (heroRef.current) {
+      const rect = heroRef.current.getBoundingClientRect()
+      const mx = (e.clientX - rect.left) / rect.width
+      const my = (e.clientY - rect.top) / rect.height
+      const clampedMx = Math.max(0, Math.min(1, mx))
+      const clampedMy = Math.max(0, Math.min(1, my))
+      const blobX = 15 + (1 - clampedMx) * 70
+      const blobY = 15 + (1 - clampedMy) * 70
+      setBlobPos({ x: blobX, y: blobY })
+    }
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [handleMouseMove])
 
   const container = {
     hidden: { opacity: 0 },
@@ -28,9 +52,27 @@ export default function Home() {
   return (
     <main className="bg-background min-h-screen text-primary selection:bg-accent selection:text-white overflow-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
-        {/* Background gradient/blob */}
-        <div className="absolute top-3/7 left-3/5 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[120px] pointer-events-none" />
+      <section
+        ref={heroRef}
+        className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
+      >
+        {/* Background gradient/blob — moves opposite to mouse */}
+        <div
+          style={{
+            position: 'absolute',
+            left: `${blobPos.x}%`,
+            top: `${blobPos.y}%`,
+            transform: 'translate(-50%, -50%)',
+            width: 500,
+            height: 500,
+            background: 'rgba(0, 89, 175, 0.20)',
+            borderRadius: '50%',
+            filter: 'blur(120px)',
+            pointerEvents: 'none',
+            transition: 'left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), top 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            zIndex: 0,
+          }}
+        />
 
         <motion.div
           variants={container}

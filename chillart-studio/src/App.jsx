@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
+import CursorDot from './components/CursorDot'
 import Home from './pages/Home'
 import Services from './pages/Services'
 import Portfolio from './pages/Portfolio'
@@ -12,6 +13,7 @@ function App() {
   return (
     <>
       <ScrollToTop />
+      <CursorDot />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
