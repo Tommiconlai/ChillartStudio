@@ -25,6 +25,10 @@
   }
 }
 
+* {
+  cursor: none;
+}
+
 /* Lenis or custom smooth scroll if needed later */
 html {
   scroll-behavior: smooth;

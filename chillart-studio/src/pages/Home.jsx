@@ -2,41 +2,16 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, Globe, Palette, Wand2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { useRef, useState, useEffect, useCallback } from 'react'
-
+import { useRef, useEffect, useCallback } from 'react'
 
 export default function Home() {
   const { t } = useTranslation()
-
-  // Blob position (opposite to mouse, within hero section)
-  const heroRef = useRef(null)
-  const [blobPos, setBlobPos] = useState({ x: 60, y: 42.85 }) // percentages
-
-  const handleMouseMove = useCallback((e) => {
-    if (heroRef.current) {
-      const rect = heroRef.current.getBoundingClientRect()
-      const mx = (e.clientX - rect.left) / rect.width
-      const my = (e.clientY - rect.top) / rect.height
-      const clampedMx = Math.max(0, Math.min(1, mx))
-      const clampedMy = Math.max(0, Math.min(1, my))
-      const blobX = 15 + (1 - clampedMx) * 70
-      const blobY = 15 + (1 - clampedMy) * 70
-      setBlobPos({ x: blobX, y: blobY })
-    }
-  }, [])
-
-  useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [handleMouseMove])
 
   const container = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
+      transition: { staggerChildren: 0.1 }
     }
   }
 
@@ -49,27 +24,68 @@ export default function Home() {
   const serviceKeys = ['web', 'brand', 'strategy']
   const pillarKeys = ['strategic', 'creative', 'technical']
 
+  const heroRef = useRef(null)
+  const blobEl = useRef(null)
+  const blobPos = useRef({ x: 0, y: 0 })
+  const targetPos = useRef({ x: 0, y: 0 })
+  const animFrameRef = useRef(null)
+
+  const handleMouseMove = useCallback((e) => {
+    if (heroRef.current) {
+      const rect = heroRef.current.getBoundingClientRect()
+      const mx = (e.clientX - rect.left) / rect.width
+      const my = (e.clientY - rect.top) / rect.height
+      const clampedMx = Math.max(0, Math.min(1, mx))
+      const clampedMy = Math.max(0, Math.min(1, my))
+      targetPos.current = {
+        x: rect.left + (0.15 + (1 - clampedMx) * 0.70) * rect.width,
+        y: rect.top + (0.15 + (1 - clampedMy) * 0.70) * rect.height,
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const lerp = (a, b, t) => a + (b - a) * t
+
+    const animate = () => {
+      blobPos.current.x = lerp(blobPos.current.x, targetPos.current.x, 0.15)
+      blobPos.current.y = lerp(blobPos.current.y, targetPos.current.y, 0.15)
+
+      if (blobEl.current) {
+        blobEl.current.style.transform = `translate(${blobPos.current.x - 250}px, ${blobPos.current.y - 250}px)`
+      }
+
+      animFrameRef.current = requestAnimationFrame(animate)
+    }
+
+    animFrameRef.current = requestAnimationFrame(animate)
+    window.addEventListener('mousemove', handleMouseMove)
+
+    return () => {
+      cancelAnimationFrame(animFrameRef.current)
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [handleMouseMove])
+
   return (
     <main className="bg-background min-h-screen text-primary selection:bg-accent selection:text-white overflow-hidden">
-      {/* Hero Section */}
       <section
         ref={heroRef}
         className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
       >
-        {/* Background gradient/blob — moves opposite to mouse */}
         <div
+          ref={blobEl}
           style={{
             position: 'absolute',
-            left: `${blobPos.x}%`,
-            top: `${blobPos.y}%`,
-            transform: 'translate(-50%, -50%)',
+            top: 0,
+            left: 0,
             width: 500,
             height: 500,
             background: 'rgba(0, 89, 175, 0.20)',
             borderRadius: '50%',
             filter: 'blur(120px)',
             pointerEvents: 'none',
-            transition: 'left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), top 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            willChange: 'transform',
             zIndex: 0,
           }}
         />
@@ -105,7 +121,6 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        {/* Scroll Indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -117,7 +132,6 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Services Preview */}
       <section className="py-32 px-6 bg-zinc-950/50">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
@@ -142,7 +156,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Us / Statement */}
       <section className="py-32 px-6">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="font-display text-3xl md:text-5xl font-bold mb-16 whitespace-pre-line">{t('home.statementTitle')}</h2>
