@@ -19,32 +19,32 @@ export default function Portfolio() {
   }
 
   return (
-    <main className="bg-background min-h-screen text-primary pt-32 px-6 pb-20">
+    <main className="page page--padded">
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="max-w-7xl mx-auto"
+        className="container-7xl px-6"
       >
-        <motion.section variants={item} className="text-center mb-20">
-          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6">{t('portfolio.pageTitle')}</h1>
-          <p className="text-xl text-secondary">{t('portfolio.pageSubtitle')}</p>
+        <motion.section variants={item} className="page-header">
+          <h1 className="page-header__title">{t('portfolio.pageTitle')}</h1>
+          <p className="page-header__subtitle">{t('portfolio.pageSubtitle')}</p>
         </motion.section>
 
-        <motion.section variants={item} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.section variants={item} className="grid-2-3">
           {projects.map((project, index) => {
             const Icon = icons[index]
             return (
-              <div key={index} className="relative group bg-zinc-900 overflow-hidden rounded-2xl border border-zinc-800 hover:border-zinc-700 transition-all duration-300">
-                <div className="p-8 pb-12">
-                  <div className="w-12 h-12 bg-zinc-800 rounded-lg flex items-center justify-center mb-6 text-2xl text-accent group-hover:bg-accent group-hover:text-white transition-colors">
-                    <Icon className="w-6 h-6" />
+              <div key={index} className="project-card">
+                <div className="project-card__body">
+                  <div className="project-card__icon-wrap">
+                    <Icon style={{ width: '1.5rem', height: '1.5rem' }} />
                   </div>
-                  <p className="text-secondary text-xs uppercase tracking-widest mb-2 font-bold">{project.category}</p>
-                  <h3 className="text-2xl font-display font-bold mb-3">{project.title}</h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed">{project.description}</p>
+                  <p className="project-card__category">{project.category}</p>
+                  <h3 className="project-card__title">{project.title}</h3>
+                  <p className="project-card__desc">{project.description}</p>
                 </div>
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                <div className="project-card__bar" />
               </div>
             )
           })}

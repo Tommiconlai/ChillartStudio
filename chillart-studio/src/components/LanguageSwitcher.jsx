@@ -11,12 +11,12 @@ export default function LanguageSwitcher() {
     return (
         <button
             onClick={toggle}
-            className="flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-secondary hover:text-white transition-colors border border-zinc-700 hover:border-zinc-500 rounded-full px-3 py-1.5"
+            className="lang-switcher"
             aria-label="Switch language"
         >
-            <span className={currentLang === 'en' ? 'text-white' : ''}>EN</span>
-            <span className="text-zinc-600">/</span>
-            <span className={currentLang === 'it' ? 'text-white' : ''}>IT</span>
+            <span className={currentLang === 'en' ? 'lang-switcher__active' : ''}>EN</span>
+            <span className="lang-switcher__sep">/</span>
+            <span className={currentLang === 'it' ? 'lang-switcher__active' : ''}>IT</span>
         </button>
     )
 }

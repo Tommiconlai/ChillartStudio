@@ -68,19 +68,15 @@ export default function Home() {
   }, [handleMouseMove])
 
   return (
-    <main className="bg-background min-h-screen text-primary selection:bg-accent selection:text-white overflow-hidden">
-      <section
-        ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
-      >
+    <main className="page">
+      {/* ── Hero ── */}
+      <section ref={heroRef} className="hero">
         <div
           ref={blobEl}
           style={{
             position: 'absolute',
-            top: 0,
-            left: 0,
-            width: 500,
-            height: 500,
+            top: 0, left: 0,
+            width: 500, height: 500,
             background: 'rgba(0, 89, 175, 0.20)',
             borderRadius: '50%',
             filter: 'blur(120px)',
@@ -94,29 +90,20 @@ export default function Home() {
           variants={container}
           initial="hidden"
           animate="show"
-          className="relative z-10 max-w-5xl mx-auto text-center"
+          className="hero__content"
         >
-          <motion.h1
-            variants={item}
-            className="font-display text-5xl md:text-8xl font-extrabold tracking-tighter mb-6 leading-tight"
-          >
+          <motion.h1 variants={item} className="hero__title">
             {t('home.heroTitle')}
           </motion.h1>
 
-          <motion.p
-            variants={item}
-            className="text-lg md:text-xl text-secondary max-w-2xl mx-auto mb-10 font-light"
-          >
+          <motion.p variants={item} className="hero__subtitle">
             {t('home.heroSubtitle')}
           </motion.p>
 
           <motion.div variants={item}>
-            <Link
-              to="/contact"
-              className="group inline-flex items-center gap-2 px-8 py-4 bg-white text-background font-bold rounded-full hover:bg-zinc-200 transition-all duration-300"
-            >
+            <Link to="/contact" className="hero__cta">
               {t('home.heroCta')}
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="hero__cta-icon" style={{ width: '1rem', height: '1rem' }} />
             </Link>
           </motion.div>
         </motion.div>
@@ -125,30 +112,31 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          className="scroll-indicator"
         >
-          <span className="text-xs uppercase tracking-widest text-zinc-500">{t('home.scroll')}</span>
-          <div className="w-px h-12 bg-linear-to-b from-zinc-500 to-transparent"></div>
+          <span className="scroll-indicator__label">{t('home.scroll')}</span>
+          <div className="scroll-indicator__line" />
         </motion.div>
       </section>
 
-      <section className="py-32 px-6 bg-zinc-950/50">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-            <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight">{t('home.expertiseTitle')}</h2>
-            <Link to="/services" className="text-accent hover:text-white transition-colors flex items-center gap-2">
-              {t('home.viewAllServices')} <ArrowRight className="w-4 h-4" />
+      {/* ── Expertise / Services ── */}
+      <section className="section-expertise">
+        <div className="container-7xl px-6">
+          <div className="section-expertise__header">
+            <h2 className="section-expertise__title">{t('home.expertiseTitle')}</h2>
+            <Link to="/services" className="section-expertise__link">
+              {t('home.viewAllServices')} <ArrowRight style={{ width: '1rem', height: '1rem' }} />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid-3">
             {serviceKeys.map((key, index) => {
               const Icon = serviceIcons[index]
               return (
-                <div key={key} className="group p-8 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all duration-300 hover:-translate-y-2">
-                  <Icon className="w-10 h-10 text-accent mb-6" />
-                  <h3 className="text-2xl font-bold mb-4 font-display">{t(`home.services.${key}.title`)}</h3>
-                  <p className="text-secondary leading-relaxed">{t(`home.services.${key}.desc`)}</p>
+                <div key={key} className="card card--lift">
+                  <Icon className="card__icon" style={{ width: '2.5rem', height: '2.5rem' }} />
+                  <h3 className="card__title">{t(`home.services.${key}.title`)}</h3>
+                  <p className="card__text">{t(`home.services.${key}.desc`)}</p>
                 </div>
               )
             })}
@@ -156,14 +144,15 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-32 px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="font-display text-3xl md:text-5xl font-bold mb-16 whitespace-pre-line">{t('home.statementTitle')}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+      {/* ── Pillars / Statement ── */}
+      <section className="section-pillars">
+        <div className="container-7xl px-6 text-center">
+          <h2 className="section-pillars__title">{t('home.statementTitle')}</h2>
+          <div className="grid-3">
             {pillarKeys.map((key) => (
-              <div key={key} className="border-t border-zinc-800 pt-8">
-                <h4 className="text-xl font-bold mb-4 text-white">{t(`home.pillars.${key}.title`)}</h4>
-                <p className="text-secondary">{t(`home.pillars.${key}.text`)}</p>
+              <div key={key} className="pillar">
+                <h4 className="pillar__title">{t(`home.pillars.${key}.title`)}</h4>
+                <p className="pillar__text">{t(`home.pillars.${key}.text`)}</p>
               </div>
             ))}
           </div>

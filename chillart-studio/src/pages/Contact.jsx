@@ -24,30 +24,30 @@ export default function Contact() {
   ]
 
   return (
-    <main className="bg-background min-h-screen text-primary pt-32 px-6 pb-20 flex flex-col items-center">
+    <main className="page page--padded" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="max-w-4xl w-full text-center"
+        className="container-4xl w-full px-6 text-center"
       >
-        <motion.section variants={item} className="mb-20">
-          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6">{t('contact.pageTitle')}</h1>
-          <p className="text-xl text-secondary">{t('contact.pageSubtitle')}</p>
+        <motion.section variants={item} className="page-header">
+          <h1 className="page-header__title">{t('contact.pageTitle')}</h1>
+          <p className="page-header__subtitle">{t('contact.pageSubtitle')}</p>
         </motion.section>
 
-        <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center bg-zinc-900/50 p-12 rounded-2xl border border-zinc-800">
+        <motion.div variants={item} className="contact-grid">
           {contactItems.map((info, i) => (
-            <div key={i} className="flex flex-col items-center gap-4">
-              <div className="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center text-accent text-2xl mb-2 border border-zinc-800">
-                <info.icon className="w-8 h-8" />
+            <div key={i} className="contact-item">
+              <div className="contact-icon-wrap">
+                <info.icon style={{ width: '2rem', height: '2rem' }} />
               </div>
               <div>
-                <h3 className="font-bold text-white text-xl mb-2">{info.title}</h3>
+                <h3 className="contact-item__title">{info.title}</h3>
                 {info.link ? (
-                  <a href={info.link} className="text-secondary hover:text-accent transition-colors text-lg">{info.content}</a>
+                  <a href={info.link} className="contact-item__link">{info.content}</a>
                 ) : (
-                  <p className="text-secondary text-lg">{info.content}</p>
+                  <p className="contact-item__text">{info.content}</p>
                 )}
               </div>
             </div>

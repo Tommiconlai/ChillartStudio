@@ -19,7 +19,6 @@ function Header() {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
-    // Close mobile menu on route change
     useEffect(() => {
         setMenuOpen(false)
     }, [location.pathname])
@@ -33,37 +32,26 @@ function Header() {
     ]
 
     return (
-        <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-md py-4' : 'bg-transparent py-6'
-                }`}
-        >
-            <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-                <Link to="/" className="text-2xl font-display font-bold text-white tracking-tighter">
-                    CHILLART<span className="text-accent">.</span>
+        <header className={`header${scrolled ? ' scrolled' : ''}`}>
+            <div className="header__inner">
+                <Link to="/" className="header__logo">
+                    CHILLART<span className="accent">.</span>
                 </Link>
 
                 {/* Desktop Menu */}
-                <nav className="hidden md:flex items-center gap-10">
+                <nav className="nav-desktop">
                     {navItems.map((item) => (
-                        <Link
-                            key={item.key}
-                            to={item.path}
-                            className="text-sm font-medium uppercase tracking-widest text-secondary hover:text-white transition-colors relative group"
-                        >
+                        <Link key={item.key} to={item.path} className="nav-link">
                             {item.label}
-                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
                         </Link>
                     ))}
                     <LanguageSwitcher />
                 </nav>
 
                 {/* Mobile: Language switcher + burger */}
-                <div className="md:hidden flex items-center gap-3">
+                <div className="header__mobile-controls">
                     <LanguageSwitcher />
-                    <button
-                        className="text-white"
-                        onClick={() => setMenuOpen(!menuOpen)}
-                    >
+                    <button className="btn-menu" onClick={() => setMenuOpen(!menuOpen)}>
                         {menuOpen ? <X /> : <Menu />}
                     </button>
                 </div>
@@ -75,13 +63,13 @@ function Header() {
                             initial={{ opacity: 0, y: -20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
-                            className="absolute top-full left-0 right-0 bg-background border-t border-white/10 p-6 flex flex-col gap-4 md:hidden shadow-2xl"
+                            className="mobile-menu"
                         >
                             {navItems.map((item) => (
                                 <Link
                                     key={item.key}
                                     to={item.path}
-                                    className="text-lg font-display font-bold text-white hover:text-accent transition-colors"
+                                    className="mobile-menu__link"
                                     onClick={() => setMenuOpen(false)}
                                 >
                                     {item.label}
@@ -92,7 +80,7 @@ function Header() {
                 </AnimatePresence>
             </div>
         </header>
-    );
+    )
 }
 
 export default Header

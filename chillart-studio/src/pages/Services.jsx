@@ -19,26 +19,26 @@ export default function Services() {
   }
 
   return (
-    <main className="bg-background min-h-screen text-primary pt-32 px-6 pb-20">
+    <main className="page page--padded">
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="max-w-7xl mx-auto"
+        className="container-7xl px-6"
       >
-        <motion.section variants={item} className="text-center mb-20">
-          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6">{t('services.pageTitle')}</h1>
-          <p className="text-xl text-secondary">{t('services.pageSubtitle')}</p>
+        <motion.section variants={item} className="page-header">
+          <h1 className="page-header__title">{t('services.pageTitle')}</h1>
+          <p className="page-header__subtitle">{t('services.pageSubtitle')}</p>
         </motion.section>
 
-        <motion.section variants={item} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.section variants={item} className="grid-2-3">
           {serviceItems.map((service, index) => {
             const Icon = icons[index]
             return (
-              <div key={index} className="bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900 transition-all duration-300 group">
-                <Icon className="w-10 h-10 text-accent mb-6 group-hover:scale-110 transition-transform" />
-                <h3 className="text-2xl font-display font-bold mb-4">{service.title}</h3>
-                <p className="text-secondary leading-relaxed">{service.description}</p>
+              <div key={index} className="card card--ghost card--lift">
+                <Icon className="card__icon" style={{ width: '2.5rem', height: '2.5rem' }} />
+                <h3 className="card__title">{service.title}</h3>
+                <p className="card__text">{service.description}</p>
               </div>
             )
           })}

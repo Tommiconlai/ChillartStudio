@@ -30,61 +30,63 @@ export default function About() {
   const values = t('about.values', { returnObjects: true })
 
   return (
-    <main className="bg-background min-h-screen text-primary pt-32 px-6 pb-20">
+    <main className="page page--padded">
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="max-w-4xl mx-auto"
+        className="container-4xl px-6"
       >
-        <motion.section variants={item} className="text-center mb-20">
-          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6">{t('about.pageTitle')}</h1>
-          <p className="text-xl text-secondary">{t('about.pageSubtitle')}</p>
+        {/* Page Header */}
+        <motion.section variants={item} className="page-header">
+          <h1 className="page-header__title">{t('about.pageTitle')}</h1>
+          <p className="page-header__subtitle">{t('about.pageSubtitle')}</p>
         </motion.section>
 
-        <motion.section variants={item} className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-32 items-center">
-          <div className="space-y-6">
-            <h2 className="font-display text-3xl font-bold">{t('about.missionTitle')}</h2>
-            <p className="text-secondary leading-relaxed">{t('about.missionP1')}</p>
-            <p className="text-secondary leading-relaxed">{t('about.missionP2')}</p>
+        {/* Mission + Stats */}
+        <motion.section variants={item} className="about-section grid-2" style={{ alignItems: 'center' }}>
+          <div className="about-mission__text">
+            <h2 className="font-display" style={{ fontSize: '1.875rem', fontWeight: 700, marginBottom: '1.5rem' }}>
+              {t('about.missionTitle')}
+            </h2>
+            <p className="about-mission__p">{t('about.missionP1')}</p>
+            <p className="about-mission__p" style={{ marginTop: '1.5rem' }}>{t('about.missionP2')}</p>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="stats-grid">
             {stats.map((stat, i) => (
-              <div key={i} className="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 text-center">
-                <div className="text-3xl font-display font-bold text-accent mb-1">{stat.value}</div>
-                <div className="text-sm text-zinc-500 uppercase tracking-widest">{stat.label}</div>
+              <div key={i} className="stat-card">
+                <div className="stat-card__value">{stat.value}</div>
+                <div className="stat-card__label">{stat.label}</div>
               </div>
             ))}
           </div>
         </motion.section>
 
-        <motion.section variants={item} className="mb-32">
-          <h2 className="font-display text-3xl font-bold mb-12 text-center">{t('about.teamTitle')}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Team */}
+        <motion.section variants={item} className="about-section">
+          <h2 className="page-header__title" style={{ marginBottom: '3rem' }}>{t('about.teamTitle')}</h2>
+          <div className="grid-3">
             {team.map((member, i) => (
-              <div key={i} className="bg-zinc-900 p-8 rounded-2xl border border-zinc-800 text-center hover:border-zinc-700 transition-colors">
-                <img
-                  src={teamPhotos[i]}
-                  alt={member.name}
-                  className="w-26 h-30 object-cover mx-auto mb-4"
-                />
-                <h3 className="font-display font-bold text-xl mb-1">{member.name}</h3>
-                <p className="text-secondary text-sm uppercase tracking-wide">{member.role}</p>
+              <div key={i} className="team-card">
+                <img src={teamPhotos[i]} alt={member.name} className="team-card__img" />
+                <h3 className="team-card__name">{member.name}</h3>
+                <p className="team-card__role">{member.role}</p>
               </div>
             ))}
           </div>
         </motion.section>
 
+        {/* Values */}
         <motion.section variants={item}>
-          <h2 className="font-display text-3xl font-bold mb-12 text-center">{t('about.valuesTitle')}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <h2 className="page-header__title" style={{ marginBottom: '3rem' }}>{t('about.valuesTitle')}</h2>
+          <div className="grid-3">
             {values.map((val, i) => {
               const Icon = valueIcons[i]
               return (
-                <div key={i} className="bg-zinc-900/50 p-8 rounded-2xl border border-zinc-900">
-                  <Icon className="w-8 h-8 text-accent mb-4" />
-                  <h4 className="font-bold mb-2">{val.title}</h4>
-                  <p className="text-secondary text-sm leading-relaxed">{val.desc}</p>
+                <div key={i} className="card card--ghost">
+                  <Icon className="card__icon" style={{ width: '2rem', height: '2rem' }} />
+                  <h4 className="card__title" style={{ fontSize: '1rem' }}>{val.title}</h4>
+                  <p className="card__text" style={{ fontSize: '0.875rem' }}>{val.desc}</p>
                 </div>
               )
             })}

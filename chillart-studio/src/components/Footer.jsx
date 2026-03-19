@@ -16,29 +16,24 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-zinc-950 text-secondary border-t border-zinc-900 pt-20 pb-10">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+    <footer className="footer">
+      <div className="footer__inner">
+        <div className="footer__grid">
           {/* Brand */}
-          <div className="space-y-6">
-            <h3 className="text-2xl font-display font-bold text-white tracking-tighter">
-              CHILLART<span className="text-accent">.</span>
+          <div>
+            <h3 className="footer__brand-title">
+              CHILLART<span className="accent">.</span>
             </h3>
-            <p className="text-sm leading-relaxed">
-              {t('footer.tagline')}
-            </p>
+            <p className="footer__tagline">{t('footer.tagline')}</p>
           </div>
 
           {/* Navigation */}
           <div>
-            <h4 className="text-white font-bold mb-6">{t('footer.navigation')}</h4>
-            <ul className="space-y-4">
+            <h4 className="footer__col-title">{t('footer.navigation')}</h4>
+            <ul className="footer__nav-list">
               {navItems.map((item) => (
                 <li key={item.key}>
-                  <Link
-                    to={item.path}
-                    className="hover:text-accent transition-colors"
-                  >
+                  <Link to={item.path} className="footer__nav-link">
                     {item.label}
                   </Link>
                 </li>
@@ -48,18 +43,18 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-white font-bold mb-6">{t('footer.contact')}</h4>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-accent shrink-0" />
-                <a href={`mailto:${SITE.email}`} className="hover:text-white transition-colors">{SITE.email}</a>
+            <h4 className="footer__col-title">{t('footer.contact')}</h4>
+            <ul className="footer__contact-list">
+              <li className="footer__contact-item">
+                <Mail className="footer__contact-icon" />
+                <a href={`mailto:${SITE.email}`} className="footer__contact-link">{SITE.email}</a>
               </li>
-              <li className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-accent shrink-0" />
-                <a href={`tel:${SITE.phone}`} className="hover:text-white transition-colors">{SITE.phone}</a>
+              <li className="footer__contact-item">
+                <Phone className="footer__contact-icon" />
+                <a href={`tel:${SITE.phone}`} className="footer__contact-link">{SITE.phone}</a>
               </li>
-              <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-accent shrink-0" />
+              <li className="footer__contact-item">
+                <MapPin className="footer__contact-icon" />
                 <span>{SITE.city}</span>
               </li>
             </ul>
@@ -67,22 +62,18 @@ export default function Footer() {
 
           {/* Socials */}
           <div>
-            <h4 className="text-white font-bold mb-6">{t('footer.followUs')}</h4>
-            <div className="flex gap-4">
+            <h4 className="footer__col-title">{t('footer.followUs')}</h4>
+            <div className="footer__socials">
               {[Facebook, Instagram, Linkedin].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-accent hover:text-white transition-all duration-300 group"
-                >
-                  <Icon className="w-5 h-5" />
+                <a key={i} href="#" className="social-icon">
+                  <Icon style={{ width: '1.25rem', height: '1.25rem' }} />
                 </a>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="border-t border-zinc-900 pt-8 text-center text-sm text-zinc-600">
+        <div className="footer__bottom">
           <p>&copy; {currentYear} Chillart Studio. {t('footer.rights')}</p>
         </div>
       </div>
