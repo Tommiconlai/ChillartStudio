@@ -35,7 +35,7 @@ export default function Services() {
           {serviceItems.map((service, index) => {
             const Icon = icons[index]
             return (
-              <div key={index} className="card card--ghost card--lift">
+              <div key={index} className="card card--lift">
                 <Icon className="card__icon" style={{ width: '2.5rem', height: '2.5rem' }} />
                 <h3 className="card__title">{service.title}</h3>
                 <p className="card__text">{service.description}</p>

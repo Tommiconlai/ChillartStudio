@@ -83,7 +83,7 @@ export default function About() {
             {values.map((val, i) => {
               const Icon = valueIcons[i]
               return (
-                <div key={i} className="card card--ghost">
+                <div key={i} className="card card--lift">
                   <Icon className="card__icon" style={{ width: '2rem', height: '2rem' }} />
                   <h4 className="card__title" style={{ fontSize: '1rem' }}>{val.title}</h4>
                   <p className="card__text" style={{ fontSize: '0.875rem' }}>{val.desc}</p>

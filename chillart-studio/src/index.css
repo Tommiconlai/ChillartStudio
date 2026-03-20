@@ -5,6 +5,8 @@
 /* ── Variables ──────────────────────────────────────────── */
 :root {
   --color-bg: #C6D300;
+  --color-bg-2: #9fb100;
+  --color-gradient: linear-gradient(to bottom, var(--color-bg), var(--color-bg-2));
   --color-primary: #050605;
   --color-secondary: #293029;
   --color-accent: #ffffff;
@@ -133,7 +135,7 @@ ul {
    PAGE SHELL (common to every page)
    ───────────────────────────────────────────────────────── */
 .page {
-  background-color: var(--color-bg);
+  background: var(--color-gradient);
   min-height: 100vh;
   color: var(--color-primary);
   overflow: hidden;
@@ -162,7 +164,7 @@ ul {
 }
 
 .header.scrolled {
-  background: rgba(10, 10, 10, 0.8);
+  background: rgb(198, 211, 0, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   padding-block: 1rem;
@@ -529,7 +531,6 @@ ul {
 .section-expertise {
   padding-block: 8rem;
   padding-inline: 1.5rem;
-  background: rgba(9, 9, 11, 0.5);
 }
 
 .section-expertise__header {
@@ -604,15 +605,12 @@ ul {
    CARDS — shared
    ───────────────────────────────────────────────────────── */
 .card {
-  background: var(--color-zinc-900);
-  border: 1px solid var(--color-zinc-800);
+  background: var(--color-bg-2);
+  border: 1px solid var(--color-accent);
   border-radius: var(--radius-2xl);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   padding: 2rem;
   transition: border-color var(--transition-base), transform var(--transition-base);
-}
-
-.card:hover {
-  border-color: var(--color-zinc-700);
 }
 
 .card--lift:hover {
