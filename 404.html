@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chillart Studio</title>
+    <script>
+      // SPA redirect per GitHub Pages
+      // Fonte: https://github.com/rafgraph/spa-github-pages
+      //
+      // Quando GitHub Pages non trova il file richiesto, serve questo 404.html.
+      // Qui codifichiamo il path come query string e reindirizziamo alla root (index.html).
+      // Lo script in index.html decodificherà il redirect e ripristinerà l'URL corretto.
+      var l = window.location;
+      l.replace(
+        l.protocol +
+          '//' +
+          l.host +
+          l.pathname.split('/').slice(0, 1).join('/') +
+          '/?p=' +
+          l.pathname.slice(1).replace(/&/g, '~and~') +
+          (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+          l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
