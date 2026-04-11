@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { ShoppingBag, Rocket, Building2, Utensils, Smartphone, BarChart3 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import PortfolioFlipCarousel from '../components/PortfolioFlipCarousel'
 
 export default function Portfolio() {
   const { t } = useTranslation()
@@ -31,23 +32,9 @@ export default function Portfolio() {
           <p className="page-header__subtitle">{t('portfolio.pageSubtitle')}</p>
         </motion.section>
 
-        <motion.section variants={item} className="grid-2-3">
-          {projects.map((project, index) => {
-            const Icon = icons[index]
-            return (
-              <div key={index} className="project-card">
-                <div className="project-card__body">
-                  <div className="project-card__icon-wrap">
-                    <Icon style={{ width: '1.5rem', height: '1.5rem' }} />
-                  </div>
-                  <p className="project-card__category">{project.category}</p>
-                  <h3 className="project-card__title">{project.title}</h3>
-                  <p className="project-card__desc">{project.description}</p>
-                </div>
-                <div className="project-card__bar" />
-              </div>
-            )
-          })}
+        {/* Carosello con flip 3D */}
+        <motion.section variants={item} style={{ marginBottom: '6rem' }}>
+          <PortfolioFlipCarousel />
         </motion.section>
       </motion.div>
     </main>

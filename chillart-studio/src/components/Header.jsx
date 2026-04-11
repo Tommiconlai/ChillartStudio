@@ -34,9 +34,6 @@ function Header() {
     return (
         <header className={`header${scrolled ? ' scrolled' : ''}`}>
             <div className="header__inner">
-                <Link to="/" className="header__logo">
-                    CHILLART<span className="accent">.</span>
-                </Link>
 
                 {/* Desktop Menu */}
                 <nav className="nav-desktop">

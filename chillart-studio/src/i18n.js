@@ -25,7 +25,6 @@ const resources = {
                     brand: { title: 'Brand Identity', desc: "Distinctive visual systems that tell your brand's unique story." },
                     strategy: { title: 'Creative Strategy', desc: 'Data-backed strategies to position your brand for growth.' },
                 },
-                statementTitle: 'Driven by results.\nFueled by passion.',
                 pillars: {
                     strategic: { title: 'Strategic', text: "We don't just design pretty things. We build systems that work for your business goals." },
                     creative: { title: 'Creative', text: 'Pushing boundaries to create memorable experiences that stand out in a crowded market.' },
@@ -121,7 +120,6 @@ const resources = {
                     brand: { title: 'Brand Identity', desc: 'Sistemi visivi distintivi che raccontano la storia unica del tuo brand.' },
                     strategy: { title: 'Strategia Creativa', desc: 'Strategie basate sui dati per posizionare il tuo brand e favorire la crescita.' },
                 },
-                statementTitle: 'Guidati dai risultati.\nAlimentati dalla passione.',
                 pillars: {
                     strategic: { title: 'Strategici', text: 'Non progettiamo solo belle cose. Costruiamo sistemi che funzionano per i tuoi obiettivi di business.' },
                     creative: { title: 'Creativi', text: 'Spingiamo i confini per creare esperienze memorabili che si distinguono in un mercato affollato.' },

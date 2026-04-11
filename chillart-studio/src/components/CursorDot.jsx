@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 
 export default function CursorDot() {
     const dotDomRef = useRef(null)
@@ -8,7 +8,14 @@ export default function CursorDot() {
     const isHovering = useRef(false)
     const scalePos = useRef(1)
 
+    // Mostra il cursore solo su dispositivi con puntatore preciso (mouse/trackpad)
+    const [hasPointer] = useState(() =>
+        typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches
+    )
+
     useEffect(() => {
+        if (!hasPointer) return
+
         const handleMouseMove = (e) => {
             targetPos.current = { x: e.clientX, y: e.clientY }
         }
@@ -19,7 +26,7 @@ export default function CursorDot() {
             const interactable = e.target.closest('a, button, [role="button"], input, textarea, select, label')
             isHovering.current = !!interactable
             if (dotDomRef.current) {
-                dotDomRef.current.style.borderColor = interactable ? '#0059af' : 'rgba(200, 200, 200, 0.6)'
+                dotDomRef.current.style.borderColor = interactable ? 'rgb(198, 211, 0, 0.7)' : 'rgba(198, 211, 0, 0.7)'
             }
         }
 
@@ -29,12 +36,11 @@ export default function CursorDot() {
         const lerp = (a, b, t) => a + (b - a) * t
 
         const animate = () => {
-
             dotPos.current.x = lerp(dotPos.current.x, targetPos.current.x, LERP)
             dotPos.current.y = lerp(dotPos.current.y, targetPos.current.y, LERP)
 
             if (dotDomRef.current) {
-                const targetScale = isHovering.current ? 0.8 : 1
+                const targetScale = isHovering.current ? 1 : 0.8
                 scalePos.current = lerp(scalePos.current, targetScale, 0.1)
                 dotDomRef.current.style.transform = `translate(${dotPos.current.x - 20}px, ${dotPos.current.y - 20}px) scale(${scalePos.current})`
             }
@@ -49,7 +55,9 @@ export default function CursorDot() {
             window.removeEventListener('mouseover', handleMouseOver)
             cancelAnimationFrame(rafRef.current)
         }
-    }, [])
+    }, [hasPointer])
+
+    if (!hasPointer) return null
 
     return (
         <div
@@ -61,8 +69,8 @@ export default function CursorDot() {
                 width: 40,
                 height: 40,
                 borderRadius: '50%',
-                background: 'rgba(160, 160, 160, 0.1)',
-                border: '1.5px solid rgba(200, 200, 200, 0.6)',
+                background: 'rgba(87, 87, 87, 0.5)',
+                border: '1.5px solid rgba(255, 255, 255, 0.8)',
                 pointerEvents: 'none',
                 zIndex: 9999,
                 willChange: 'transform',

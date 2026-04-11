@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Globe, Palette, Wand2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useRef, useEffect, useCallback } from 'react'
+import logo from '../assets/LogoChillart.png'
 
 export default function Home() {
   const { t } = useTranslation()
@@ -77,7 +78,7 @@ export default function Home() {
             position: 'absolute',
             top: 0, left: 0,
             width: 500, height: 500,
-            background: 'rgba(0, 89, 175, 0.20)',
+            background: 'rgba(159, 177, 0, 0.5)',
             borderRadius: '50%',
             filter: 'blur(120px)',
             pointerEvents: 'none',
@@ -92,6 +93,8 @@ export default function Home() {
           animate="show"
           className="hero__content"
         >
+          <img src={logo} alt="Logo Chillart" className="hero__logo" />
+
           <motion.h1 variants={item} className="hero__title">
             {t('home.heroTitle')}
           </motion.h1>
@@ -147,7 +150,6 @@ export default function Home() {
       {/* ── Pillars / Statement ── */}
       <section className="section-pillars">
         <div className="container-7xl px-6 text-center">
-          <h2 className="section-pillars__title">{t('home.statementTitle')}</h2>
           <div className="grid-3">
             {pillarKeys.map((key) => (
               <div key={key} className="pillar">
