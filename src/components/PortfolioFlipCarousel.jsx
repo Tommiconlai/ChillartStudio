@@ -41,7 +41,8 @@ export default function PortfolioFlipCarousel() {
     if (isAnimating) return
     pendingNext.current = newIdx
     setNextIdx(newIdx)
-    setFlipAngle(forward ? 180 : -180)
+    // rotazione nella stessa direzione dello swipe: next ruota a sinistra, prev a destra
+    setFlipAngle(forward ? -180 : 180)
     setIsAnimating(true)
   }
 
