@@ -25,9 +25,6 @@ export default function CursorDot() {
         const handleMouseOver = (e) => {
             const interactable = e.target.closest('a, button, [role="button"], input, textarea, select, label')
             isHovering.current = !!interactable
-            if (dotDomRef.current) {
-                dotDomRef.current.style.borderColor = interactable ? 'rgb(198, 211, 0, 0.7)' : 'rgba(198, 211, 0, 0.7)'
-            }
         }
 
         window.addEventListener('mouseover', handleMouseOver)

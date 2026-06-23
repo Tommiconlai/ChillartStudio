@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+lint_report.txt
 
 # Environment variables
 .env

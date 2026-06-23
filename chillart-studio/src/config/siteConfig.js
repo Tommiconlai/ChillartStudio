@@ -3,9 +3,6 @@
 // ============================================================
 
 export const SITE = {
-    name: 'Chillart Studio',
-    tagline: 'Design that speaks.',
-
     // Contatti
     email: 'grafichenelchill@gmail.com',
     phone: '+39 3469578393',

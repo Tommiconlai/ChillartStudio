@@ -1,22 +1,13 @@
 import { motion } from 'framer-motion'
 import { Globe, Palette, Wand2, Target, Smartphone, Lightbulb } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { container, item } from '../motion'
 
 export default function Services() {
   const { t } = useTranslation()
 
   const icons = [Globe, Palette, Wand2, Target, Smartphone, Lightbulb]
   const serviceItems = t('services.items', { returnObjects: true })
-
-  const container = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.1 } }
-  }
-
-  const item = {
-    hidden: { y: 20, opacity: 0 },
-    show: { y: 0, opacity: 1 }
-  }
 
   return (
     <main className="page page--padded">

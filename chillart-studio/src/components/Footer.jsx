@@ -1,19 +1,13 @@
 import { Link } from 'react-router-dom'
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
+import { Instagram, Mail, MapPin, Phone } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { SITE } from '../config/siteConfig'
+import { navItems } from '../nav'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   const { t } = useTranslation()
-
-  const navItems = [
-    { key: 'home', label: t('nav.home'), path: '/' },
-    { key: 'services', label: t('nav.services'), path: '/services' },
-    { key: 'portfolio', label: t('nav.portfolio'), path: '/portfolio' },
-    { key: 'about', label: t('nav.about'), path: '/about' },
-    { key: 'contact', label: t('nav.contact'), path: '/contact' },
-  ]
+  const items = navItems(t)
 
   return (
     <footer className="footer">
@@ -31,7 +25,7 @@ export default function Footer() {
           <div>
             <h4 className="footer__col-title">{t('footer.navigation')}</h4>
             <ul className="footer__nav-list">
-              {navItems.map((item) => (
+              {items.map((item) => (
                 <li key={item.key}>
                   <Link to={item.path} className="footer__nav-link">
                     {item.label}
@@ -64,11 +58,9 @@ export default function Footer() {
           <div>
             <h4 className="footer__col-title">{t('footer.followUs')}</h4>
             <div className="footer__socials">
-              {[Facebook, Instagram, Linkedin].map((Icon, i) => (
-                <a key={i} href="#" className="social-icon">
-                  <Icon style={{ width: '1.25rem', height: '1.25rem' }} />
-                </a>
-              ))}
+              <a href={SITE.instagram} target="_blank" rel="noreferrer" className="social-icon" aria-label="Instagram">
+                <Instagram style={{ width: '1.25rem', height: '1.25rem' }} />
+              </a>
             </div>
           </div>
         </div>

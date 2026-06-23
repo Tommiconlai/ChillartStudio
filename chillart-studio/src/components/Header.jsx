@@ -4,12 +4,14 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from './LanguageSwitcher'
+import { navItems } from '../nav'
 
 function Header() {
     const [scrolled, setScrolled] = useState(false)
     const [menuOpen, setMenuOpen] = useState(false)
     const { t } = useTranslation()
     const location = useLocation()
+    const items = navItems(t)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -23,21 +25,13 @@ function Header() {
         setMenuOpen(false)
     }, [location.pathname])
 
-    const navItems = [
-        { key: 'home', label: t('nav.home'), path: '/' },
-        { key: 'services', label: t('nav.services'), path: '/services' },
-        { key: 'portfolio', label: t('nav.portfolio'), path: '/portfolio' },
-        { key: 'about', label: t('nav.about'), path: '/about' },
-        { key: 'contact', label: t('nav.contact'), path: '/contact' },
-    ]
-
     return (
         <header className={`header${scrolled ? ' scrolled' : ''}`}>
             <div className="header__inner">
 
                 {/* Desktop Menu */}
                 <nav className="nav-desktop">
-                    {navItems.map((item) => (
+                    {items.map((item) => (
                         <Link key={item.key} to={item.path} className="nav-link">
                             {item.label}
                         </Link>
@@ -62,7 +56,7 @@ function Header() {
                             exit={{ opacity: 0, y: -20 }}
                             className="mobile-menu"
                         >
-                            {navItems.map((item) => (
+                            {items.map((item) => (
                                 <Link
                                     key={item.key}
                                     to={item.path}

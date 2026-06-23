@@ -2,19 +2,10 @@ import { motion } from 'framer-motion'
 import { Users, Target, Zap } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import tommiPhoto from '../assets/Tommi_CV.png'
+import { container, item } from '../motion'
 
 export default function About() {
   const { t } = useTranslation()
-
-  const container = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.1 } }
-  }
-
-  const item = {
-    hidden: { y: 20, opacity: 0 },
-    show: { y: 0, opacity: 1 }
-  }
 
   const stats = [
     { label: t('about.stats.projects'), value: '150+' },
@@ -24,7 +15,7 @@ export default function About() {
   ]
 
   const team = t('about.team', { returnObjects: true })
-  const teamPhotos = [tommiPhoto, tommiPhoto, tommiPhoto]
+  const teamPhotos = Array(3).fill(tommiPhoto)
 
   const valueIcons = [Target, Zap, Users]
   const values = t('about.values', { returnObjects: true })
