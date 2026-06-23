@@ -96,6 +96,11 @@ const resources = {
                 followUs: 'Follow Us',
                 rights: 'All rights reserved.',
             },
+            notFound: {
+                title: 'Page not found',
+                text: 'The page you are looking for has moved or no longer exists.',
+                cta: 'Back to home',
+            },
         },
     },
     it: {
@@ -190,6 +195,11 @@ const resources = {
                 contact: 'Contatti',
                 followUs: 'Seguici',
                 rights: 'Tutti i diritti riservati.',
+            },
+            notFound: {
+                title: 'Pagina non trovata',
+                text: 'La pagina che cerchi è stata spostata o non esiste più.',
+                cta: 'Torna alla home',
             },
         },
     },

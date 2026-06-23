@@ -8,9 +8,11 @@ export default function CursorDot() {
     const isHovering = useRef(false)
     const scalePos = useRef(1)
 
-    // Mostra il cursore solo su dispositivi con puntatore preciso (mouse/trackpad)
+    // Mostra il cursore solo su device con puntatore preciso e hover reale
+    // (mouse/trackpad). Esclude touch/mobile, dove hover non esiste.
     const [hasPointer] = useState(() =>
-        typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches
+        typeof window !== 'undefined' &&
+        window.matchMedia('(hover: hover) and (pointer: fine)').matches
     )
 
     useEffect(() => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
@@ -32,9 +32,9 @@ function Header() {
                 {/* Desktop Menu */}
                 <nav className="nav-desktop">
                     {items.map((item) => (
-                        <Link key={item.key} to={item.path} className="nav-link">
+                        <NavLink key={item.key} to={item.path} end={item.path === '/'} className="nav-link">
                             {item.label}
-                        </Link>
+                        </NavLink>
                     ))}
                     <LanguageSwitcher />
                 </nav>
@@ -57,14 +57,15 @@ function Header() {
                             className="mobile-menu"
                         >
                             {items.map((item) => (
-                                <Link
+                                <NavLink
                                     key={item.key}
                                     to={item.path}
+                                    end={item.path === '/'}
                                     className="mobile-menu__link"
                                     onClick={() => setMenuOpen(false)}
                                 >
                                     {item.label}
-                                </Link>
+                                </NavLink>
                             ))}
                         </motion.div>
                     )}
