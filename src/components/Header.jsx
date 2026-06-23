@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
@@ -10,7 +10,6 @@ function Header() {
     const [scrolled, setScrolled] = useState(false)
     const [menuOpen, setMenuOpen] = useState(false)
     const { t } = useTranslation()
-    const location = useLocation()
     const items = navItems(t)
 
     useEffect(() => {
@@ -20,10 +19,6 @@ function Header() {
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
-
-    useEffect(() => {
-        setMenuOpen(false)
-    }, [location.pathname])
 
     return (
         <header className={`header${scrolled ? ' scrolled' : ''}`}>
