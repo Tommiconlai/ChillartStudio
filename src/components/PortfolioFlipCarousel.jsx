@@ -15,6 +15,7 @@ export default function PortfolioFlipCarousel() {
   const [flipAngle, setFlipAngle] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
   const pendingNext = useRef(0)
+  const touchStart = useRef(null)
 
   if (images.length === 0) {
     return (
@@ -64,6 +65,22 @@ export default function PortfolioFlipCarousel() {
     setIsAnimating(false)
   }
 
+  // Swipe: cambia immagine se lo spostamento orizzontale supera la soglia
+  const handleTouchStart = (e) => {
+    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+  }
+
+  const handleTouchEnd = (e) => {
+    if (!touchStart.current) return
+    const dx = e.changedTouches[0].clientX - touchStart.current.x
+    const dy = e.changedTouches[0].clientY - touchStart.current.y
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      if (dx < 0) handleNext()
+      else handlePrev()
+    }
+    touchStart.current = null
+  }
+
   return (
     <div className="flip-carousel">
       {/* Freccia sinistra */}
@@ -76,7 +93,11 @@ export default function PortfolioFlipCarousel() {
       </button>
 
       {/* Stage con effetto 3D */}
-      <div className="flip-carousel__stage">
+      <div
+        className="flip-carousel__stage"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <motion.div
           className="flip-carousel__flipper"
           animate={{ rotateY: flipAngle }}

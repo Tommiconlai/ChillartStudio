@@ -520,6 +520,7 @@ ul {
 .hero__content {
   position: relative;
   z-index: 10;
+  width: 100%;
   max-width: var(--max-w-5xl);
   margin-inline: auto;
   text-align: center;
@@ -535,11 +536,12 @@ ul {
 
 .hero__title {
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 9vw, 5.5rem);
+  font-size: clamp(2rem, 8vw, 5.5rem);
   font-weight: 800;
   letter-spacing: -0.045em;
   line-height: 1.02;
   margin-bottom: 1.5rem;
+  overflow-wrap: break-word;
 }
 
 .hero__subtitle {
@@ -792,6 +794,18 @@ ul {
   .grid-2-3 {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* Evita il "blowout" dei grid su mobile: i figli con min-width auto
+   non si restringono e sfondano il contenitore. min-width: 0 lo risolve. */
+.grid-2 > *,
+.grid-3 > *,
+.grid-4 > *,
+.grid-2-3 > *,
+.stats-grid > *,
+.contact-grid > *,
+.footer__grid > * {
+  min-width: 0;
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -1138,14 +1152,24 @@ ul {
   text-transform: uppercase;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  /* Mobile: niente frecce, navigazione via swipe */
   .flip-carousel {
-    grid-template-columns: 2.5rem 1fr 2.5rem;
+    grid-template-columns: 1fr;
+    grid-template-areas: none;
   }
 
   .flip-carousel__btn {
-    width: 2.5rem;
-    height: 2.5rem;
+    display: none;
+  }
+
+  .flip-carousel__stage {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .flip-carousel__footer {
+    grid-column: 1;
   }
 }
 
